@@ -1,7 +1,7 @@
 """
 banco.py  -  conexao e utilitarios do PostgreSQL
 ------------------------------------------------
-Mesmo papel do banco.py dos projetos anteriores: abrir conexao, executar SQL e
+abrir conexao, executar SQL e
 inserir em lote. Acrescenta recriar_banco() (o CREATE DATABASE do PostgreSQL
 precisa de autocommit e de uma conexao em OUTRO banco) e executar_script() para
 rodar os arquivos da pasta sql/.
@@ -72,17 +72,21 @@ def consultar(conexao, comando, params=None):
     return linhas
 
 
-def inserir_em_lote(conexao, sql_insert, linhas):
+def inserir_em_lote(conexao, sql_insert, linhas, commit=True):
     """Insere varias linhas de uma vez.
 
     'sql_insert' vem no formato  INSERT INTO t (a,b) VALUES (%s, %s)
     e e convertido para o formato do execute_values (VALUES %s), que envia
     o lote inteiro em UM comando (muito mais rapido que executemany).
+
+    commit=False deixa a transacao aberta: quem chamou decide quando confirmar (commit) ou
+    desfazer (rollback), e assim varias tabelas podem entrar tudo-ou-nada.
     """
     if not linhas:
         return
     base = re.sub(r"VALUES\s*\(.*\)\s*$", "VALUES %s", sql_insert, flags=re.S)
     cursor = conexao.cursor()
     execute_values(cursor, base, linhas, page_size=2000)
-    conexao.commit()
+    if commit:
+        conexao.commit()
     cursor.close()
