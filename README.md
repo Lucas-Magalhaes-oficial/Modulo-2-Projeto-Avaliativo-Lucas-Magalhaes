@@ -4,7 +4,7 @@
 Projeto Avaliativo do Módulo 2, Semana 13 (Situação de Aprendizagem: Análise de Dados com Python – PostgreSQL [T1]).
 Autor: Lucas Magalhães.
 
-> **Vídeo de apresentação (Review de Sprint):** [assistir no Google Drive](aqui vou colocar o link do vídeo)
+> **Vídeo de apresentação (Review de Sprint):** [assistir no Google Drive](https://drive.google.com/file/d/1UKg08JUoAeqLEScqm0M017SF-UVPd55T/view?usp=sharing)
 
 ---
 
